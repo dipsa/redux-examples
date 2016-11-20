@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>JS Bin</title>
+</head>
+<body>
+<script src="https://unpkg.com/expect/umd/expect.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/redux/3.6.0/redux.min.js"></script>
+<script id="jsbin-javascript">
+'use strict';
+var counter = function counter(state, action) {
+  if (state === undefined) state = 0;
+  switch (action.type) {
+    case 'INCREMENT':
+      return state + 1;
+    case 'DECREMENT':
+      return state - 1;
+    default:
+      return state;
+  }
+};
+var _Redux = Redux;
+var createStore = _Redux.createStore;
+//var createStore = Redux.createStore;
+//import { createStore } from 'redux';
+var store = createStore(counter);
+//console.log(store.getState());
+//store.dispatch({type: 'INCREMENT'});
+//console.log(store.getState());
+var render = function render() {
+  document.body.innerText = store.getState();
+};
+store.subscribe(render);
+render();
+document.addEventListener('click', function () {
+  store.dispatch({ type: 'INCREMENT' });
+});
+// tests.....
+expect(counter(0, { type: 'INCREMENT' })).toEqual(1);
+expect(counter(1, { type: 'INCREMENT' })).toEqual(2);
+expect(counter(2, { type: 'DECREMENT' })).toEqual(1);
+expect(counter(1, { type: 'DECREMENT' })).toEqual(0);
+expect(counter(1, { type: 'SOMETHING' })).toEqual(1);
+expect(counter(undefined, {})).toEqual(0);
+console.log('Tests are passing...');
+</script>
+
+
+
+<script id="jsbin-source-javascript" type="text/javascript">const counter = (state = 0, action) => {
+  switch (action.type) {
+    case 'INCREMENT':
+      return state + 1;
+    case 'DECREMENT':
+      return state - 1;
+    default:
+      return state;
+  }
+}
+const { createStore } = Redux;
+//var createStore = Redux.createStore;
+//import { createStore } from 'redux';
+const store = createStore(counter);
+//console.log(store.getState());
+//store.dispatch({type: 'INCREMENT'});
+//console.log(store.getState());
+const render = () => {
+  document.body.innerText= store.getState();
+}
+store.subscribe(render);
+render();
+document.addEventListener('click', () => {
+  store.dispatch({ type: 'INCREMENT' });
+});
+// tests.....
+expect(
+  counter(0, {type: 'INCREMENT'})
+).toEqual(1);
+expect(
+  counter(1, {type: 'INCREMENT'})
+).toEqual(2);
+expect(
+  counter(2, {type: 'DECREMENT'})
+).toEqual(1);
+expect(
+  counter(1, {type: 'DECREMENT'})
+).toEqual(0);
+expect(
+  counter(1, {type: 'SOMETHING'})
+).toEqual(1);
+expect(
+  counter(undefined, {})
+).toEqual(0);
+console.log('Tests are passing...');</script></body>
+</html>
